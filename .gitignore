@@ -1,0 +1,6 @@
+build/
+debug/
+disassembly/
+dist/
+nbproject/private/
+
