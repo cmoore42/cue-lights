@@ -44,8 +44,6 @@ void main_loop(void);
  * Usage: Master and slave
  * 
  * Any channel that is in STANDBY will have its LED toggled
- * 
- * TODO: Update for slave mode
  */
 void blink_isr(void) {
     uint8_t i;

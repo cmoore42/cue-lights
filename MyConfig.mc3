@@ -1,12 +1,12 @@
 <config configVersion="1.1" device="PIC16F15376" coreVersion="4.56">
    <usedClasses class="java.util.HashMap">
       <entry>
-         <string>TMR0</string>
-         <string>class com.microchip.mcc.mcu8.modules.tmr0_mid0.TMR0</string>
-      </entry>
-      <entry>
          <string>System Module</string>
          <string>class com.microchip.mcc.mcu8.systemManager.SystemManager</string>
+      </entry>
+      <entry>
+         <string>TMR0</string>
+         <string>class com.microchip.mcc.mcu8.modules.tmr0_mid0.TMR0</string>
       </entry>
       <entry>
          <string>INTERNAL OSCILLATOR</string>
@@ -17,24 +17,24 @@
          <string>class com.microchip.mcc.mcu8.systemManager.pmd.PMD</string>
       </entry>
       <entry>
-         <string>EUSART2</string>
-         <string>class com.microchip.mcc.mcu8.modules.eusart.EUSART</string>
-      </entry>
-      <entry>
          <string>WWDT</string>
          <string>class com.microchip.mcc.mcu8.systemManager.wwdt.WWDT</string>
+      </entry>
+      <entry>
+         <string>EUSART2</string>
+         <string>class com.microchip.mcc.mcu8.modules.eusart.EUSART</string>
       </entry>
       <entry>
          <string>Pin Module</string>
          <string>class com.microchip.mcc.mcu8.pinManager.PinManager</string>
       </entry>
       <entry>
-         <string>EUSART1</string>
-         <string>class com.microchip.mcc.mcu8.modules.eusart.EUSART</string>
-      </entry>
-      <entry>
          <string>RESET</string>
          <string>class com.microchip.mcc.mcu8.systemManager.reset.RESET</string>
+      </entry>
+      <entry>
+         <string>EUSART1</string>
+         <string>class com.microchip.mcc.mcu8.modules.eusart.EUSART</string>
       </entry>
       <entry>
          <string>Interrupt Module</string>
@@ -1547,7 +1547,7 @@
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="EUSART1" name="baudRateErrorLabel"/>
-         <value>Register set</value>
+         <value>Error: 0.000 %</value>
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="Pin Module" registerAlias="IOCBN" settingAlias="IOCBN6" alias="disabled"/>
@@ -1587,7 +1587,7 @@
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.RegisterKey" moduleName="EUSART1" registerAlias="SPBRGL"/>
-         <value>7</value>
+         <value>15</value>
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.RegisterKey" moduleName="EUSART2" registerAlias="SPBRGL"/>
@@ -5839,7 +5839,7 @@
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="EUSART1" name="baudprocessmode"/>
-         <value>register</value>
+         <value>easysetup</value>
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="Pin Module" registerAlias="SLRCONE" settingAlias="SLRE1" alias="maximum"/>
@@ -6339,7 +6339,7 @@
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="EUSART1" name="baudRateComboBox"/>
-         <value>500000.000</value>
+         <value>250000</value>
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.SettingKey" moduleName="Pin Module" registerAlias="ODCONB" settingAlias="ODCB3"/>
@@ -8087,7 +8087,7 @@
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.SettingKey" moduleName="EUSART1" registerAlias="SPBRGL" settingAlias="SPBRGL"/>
-         <value>7</value>
+         <value>15</value>
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="TMR1" registerAlias="TCLK" settingAlias="TMRCS" alias="CLC4OUT"/>
@@ -8540,20 +8540,20 @@
    </tokenMap>
    <generatedFileHashHistoryMap class="java.util.HashMap">
       <entry>
-         <file>mcc_generated_files\interrupt_manager.h</file>
-         <hash>c1479af58d493ca757d8f9af592fc1646dc076121d6b5413018c3b536eda13bb</hash>
-      </entry>
-      <entry>
-         <file>mcc_generated_files\eusart2.c</file>
-         <hash>644c8f460b60d8fbcf353c7864a2efa6ccc15dce5aac1ea63fce004d9710d291</hash>
-      </entry>
-      <entry>
          <file>mcc_generated_files\mcc.h</file>
          <hash>bc3490f8147a1ca576db083b52fab016facd52310d113243d3c8fb18834b4b85</hash>
       </entry>
       <entry>
          <file>mcc_generated_files\device_config.h</file>
          <hash>87c162832b9f099461d96d93c8febc0e5e70aa0651a057404e1df33dce46903c</hash>
+      </entry>
+      <entry>
+         <file>mcc_generated_files\interrupt_manager.h</file>
+         <hash>c1479af58d493ca757d8f9af592fc1646dc076121d6b5413018c3b536eda13bb</hash>
+      </entry>
+      <entry>
+         <file>mcc_generated_files\eusart2.c</file>
+         <hash>644c8f460b60d8fbcf353c7864a2efa6ccc15dce5aac1ea63fce004d9710d291</hash>
       </entry>
       <entry>
          <file>mcc_generated_files\tmr1.h</file>
@@ -8596,16 +8596,16 @@
          <hash>969a5e0658efe4b8553d8af6262286623da5c01f8ca862d593281e3a396f5f7b</hash>
       </entry>
       <entry>
-         <file>mcc_generated_files\interrupt_manager.c</file>
-         <hash>66c48420fe0b073870a73c37936bf44f42c5b06d5d9c540d5bf1f8f6d1b43445</hash>
-      </entry>
-      <entry>
          <file>mcc_generated_files\mcc.c</file>
          <hash>1f91f96e0750444447e5d9636fb306b7b47833c88df1a8480bfaf0db84812233</hash>
       </entry>
       <entry>
+         <file>mcc_generated_files\interrupt_manager.c</file>
+         <hash>66c48420fe0b073870a73c37936bf44f42c5b06d5d9c540d5bf1f8f6d1b43445</hash>
+      </entry>
+      <entry>
          <file>mcc_generated_files\eusart1.c</file>
-         <hash>edabf21c9eea9e03e46382b426e7f43acd4ce8de0d14ad16f52feb06842fcd3b</hash>
+         <hash>e5f269cbb5b224e4d9b37b4adb42737eba785ae8c5980ce4248d280310773c10</hash>
       </entry>
    </generatedFileHashHistoryMap>
 </config>
