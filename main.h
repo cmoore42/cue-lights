@@ -12,9 +12,11 @@ void dbg_print(const char *str);
 void dbg_putch(const char c);
     
 #ifdef DEBUG
-#define DEBUG_TEST 1
+#define DBG_PRINT(x) dbg_print(x)
+#define DBG_PUTCH(x) dbg_putch(x)
 #else 
-#define DEBUG_TEST 0
+#define DBG_PRINT(x) ;
+#define DBG_PUTCH(x) ;
 #endif
     
 #define LED_ON 1

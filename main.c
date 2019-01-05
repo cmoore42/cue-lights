@@ -215,7 +215,7 @@ void main(void)
     INTERRUPT_GlobalInterruptEnable();
     INTERRUPT_PeripheralInterruptEnable();
    
-    dbg_print("Started.\r\n");
+    DBG_PRINT("Started.\r\n");
     print_config();
     
     while (1) {
@@ -232,7 +232,7 @@ void main(void)
 
 
 void handle_config_change() {
-    dbg_print("Config change, ");
+    DBG_PRINT("Config change, ");
     /* 
      * High bit is mode: 0=slave, 1=master 
      * In master mode the lower three bits indicate how many channels to 

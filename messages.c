@@ -172,12 +172,12 @@ static void xmit_msg(struct message *msg) {
     while (!EUSART1_is_tx_done()) ;
 
     RX_Mode();
-    dbg_putch(msg->from + '0');
-    dbg_print("->");
-    dbg_putch(msg->to + '0');
-    dbg_putch(':');
-    dbg_putch(msg->msg_type + '0');
-    dbg_print("\r\n");
+    DBG_PUTCH(msg->from + '0');
+    DBG_PRINT("->");
+    DBG_PUTCH(msg->to + '0');
+    DBG_PUTCH(':');
+    DBG_PUTCH(msg->msg_type + '0');
+    DBG_PRINT("\r\n");
   
     // (("Msg %d => %d\r\n", msg->msg_type, msg->to));
 }
@@ -269,20 +269,20 @@ static void queue_ib_msg(uint8_t rx_offset) {
     
     sof = recv_buffer[(rx_offset - 4) & RX_OFFSET_MASK];
     if (sof != MSG_SOF) {
-        dbg_print("IF\r\n");
+        DBG_PRINT("IF\r\n");
         return;
     }
     from = recv_buffer[(rx_offset - 3) & RX_OFFSET_MASK];
     to = recv_buffer[(rx_offset - 2) & RX_OFFSET_MASK];
     if (to != g_my_address) {
-        dbg_print("NO\r\n");
+        DBG_PRINT("NO\r\n");
         return;
     }
     msg_type = recv_buffer[(rx_offset - 1) & RX_OFFSET_MASK];
 
 
     if (ib_pi == ((ib_ci - 1) & IDX_MASK)) {
-        dbg_print("IBQ Full\r\n");
+        DBG_PRINT("IBQ Full\r\n");
     } else {
         msg = &(inbound_q[ib_pi]);
         msg->from = from;

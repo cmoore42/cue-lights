@@ -53,30 +53,30 @@ void master_loop(void) {
 static void master_handle_button_press(uint8_t r, uint8_t c) {
     uint8_t i;
     
-    dbg_print("Button ");
-    dbg_putch('0'+r);
-    dbg_print(", ");
+    DBG_PRINT("Button ");
+    DBG_PUTCH('0'+r);
+    DBG_PRINT(", ");
     if (c > 9) {
-        dbg_putch('1');
-        dbg_putch('0' + c - 10);
+        DBG_PUTCH('1');
+        DBG_PUTCH('0' + c - 10);
     } else {
-        dbg_putch('0' + c);
+        DBG_PUTCH('0' + c);
     }
-    dbg_print("\r\n");
+    DBG_PRINT("\r\n");
 
     if (c == g_num_columns-1) {
         // Rightmost column
         switch(r) {
             case ROW_STANDBY:
                 // Select All
-                dbg_print("Select All\r\n");
+                DBG_PRINT("Select All\r\n");
                 for (i=0; i<g_num_channels; i++) {
                     g_channel[i].selected = 1;
                     g_leds[ROW_SELECT][i] = LED_ON;
                 }
                 break;
             case ROW_GO:
-                dbg_print("Select None\r\n");
+                DBG_PRINT("Select None\r\n");
                 // Select None
                 for (i=0; i<g_num_channels; i++) {
                     g_channel[i].selected = 0;
@@ -84,7 +84,7 @@ static void master_handle_button_press(uint8_t r, uint8_t c) {
                 }
                 break;
             case ROW_SELECT:
-                dbg_print("Clear All\r\n");
+                DBG_PRINT("Clear All\r\n");
                 // Clear All
                 for (i=0; i<g_num_channels; i++) {
                     message_send(MSG_MASTER, i+1, MSG_GOTO_IDLE);
@@ -95,7 +95,7 @@ static void master_handle_button_press(uint8_t r, uint8_t c) {
         // Second to right column
         switch(r) {
             case ROW_STANDBY:
-                dbg_print("Standby Selected\r\n");
+                DBG_PRINT("Standby Selected\r\n");
                 // Standby Selected
                 for (i=0; i<g_num_channels; i++) {
                     if (g_channel[i].selected) {
@@ -104,7 +104,7 @@ static void master_handle_button_press(uint8_t r, uint8_t c) {
                 }
                 break;
             case ROW_GO:
-                dbg_print("Go Selected\r\n");
+                DBG_PRINT("Go Selected\r\n");
                 // Go Selected
                 for (i=0; i<g_num_channels; i++) {
                     if (g_channel[i].selected) {
@@ -113,7 +113,7 @@ static void master_handle_button_press(uint8_t r, uint8_t c) {
                 }
                 break;
             case ROW_SELECT:
-                dbg_print("Clear Selected\r\n");
+                DBG_PRINT("Clear Selected\r\n");
                 // Clear Selected
                 for (i=0; i<g_num_channels; i++) {
                     if (g_channel[i].selected) {
@@ -125,26 +125,26 @@ static void master_handle_button_press(uint8_t r, uint8_t c) {
     } else {
         // One of the channel buttons
         int channel = c+1;
-        dbg_print("Channel ");
-        dbg_putch('0' + channel);
+        DBG_PRINT("Channel ");
+        DBG_PUTCH('0' + channel);
         switch (r) {
             case ROW_STANDBY:               
                 // Standby
                 if ((g_channel[c].state == STATE_IDLE) ||
                     (g_channel[c].state == STATE_GO)) {
-                    dbg_print("Idle -> Standby\r\n");
+                    DBG_PRINT("Idle -> Standby\r\n");
                     message_send(MSG_MASTER, channel, MSG_GOTO_STANDBY);
                 } else {
-                    dbg_print("Standby -> Idle\r\n");
+                    DBG_PRINT("Standby -> Idle\r\n");
                     message_send(MSG_MASTER, channel, MSG_GOTO_IDLE);
                 }
                 break;
             case ROW_GO:                // Go
                 if (g_channel[c].state == STATE_GO) {
-                    dbg_print("Go -> Idle\r\n");
+                    DBG_PRINT("Go -> Idle\r\n");
                     message_send(MSG_MASTER, channel, MSG_GOTO_IDLE);
                 } else {
-                    dbg_print("Idle -> Go\r\n:");
+                    DBG_PRINT("Idle -> Go\r\n:");
                     message_send(MSG_MASTER, channel, MSG_GOTO_GO);
                 }
                 break;
@@ -153,9 +153,9 @@ static void master_handle_button_press(uint8_t r, uint8_t c) {
                 g_channel[c].selected = !(g_channel[c].selected);
                 g_leds[ROW_SELECT][c] = g_channel[c].selected;
                 if (g_channel[c].selected) {
-                    dbg_print("Selected\r\n");
+                    DBG_PRINT("Selected\r\n");
                 } else {
-                    dbg_print("Unselected\r\n");
+                    DBG_PRINT("Unselected\r\n");
                 }
                 break;
         }       
@@ -172,10 +172,10 @@ static void master_handle_button_press(uint8_t r, uint8_t c) {
  */
 static void master_handle_message(struct message *msg) {
     
-    dbg_putch(msg->msg_type + '0');
-    dbg_print("<=");
-    dbg_putch(msg->from + '0');
-    dbg_print("\r\n");
+    DBG_PUTCH(msg->msg_type + '0');
+    DBG_PRINT("<=");
+    DBG_PUTCH(msg->from + '0');
+    DBG_PRINT("\r\n");
     if (msg->to != MSG_MASTER) {
         return;
     }
@@ -216,11 +216,11 @@ static void master_set_state(uint8_t chan, uint8_t state) {
     column = chan-1;
     
 #ifdef DEBUG
-    dbg_putch('C');
-    dbg_putch(chan + '0');
-    dbg_putch('S');
-    dbg_putch(state + '0');
-    dbg_print("\r\n");
+    DBG_PUTCH('C');
+    DBG_PUTCH(chan + '0');
+    DBG_PUTCH('S');
+    DBG_PUTCH(state + '0');
+    DBG_PRINT("\r\n");
 #else
     /*
     EUSART2_Write('C');
