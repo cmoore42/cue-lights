@@ -7,16 +7,15 @@
 extern "C" {
 #endif /* __cplusplus */
     
-#define MSG_IDLE 0
-#define MSG_STANDBY 1
-#define MSG_READY 2
-#define MSG_GO 3
-#define MSG_IDLE_ACK 4
-#define MSG_STANDBY_ACK 5
-#define MSG_READY_ACK 6
-#define MSG_GO_ACK 7
-#define MSG_POLL 8
-#define MSG_PRESENCE 9
+#define MSG_GOTO_IDLE       0   // Master to slave
+#define MSG_GOTO_STANDBY    1   // Master to slave
+#define MSG_GOTO_READY      2   // Slave to Master
+#define MSG_GOTO_GO         3   // Master to slave
+#define MSG_INSTATE_IDLE    4   // Slave to Master
+#define MSG_INSTATE_STANDBY 5   // Slave to Master
+#define MSG_INSTATE_READY   6   // Master to slave
+#define MSG_INSTATE_GO      7   // Slave to Master
+#define MSG_DO_POLL         8   // Master to slave
     
 
 #define MSG_SOF 0x55

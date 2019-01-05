@@ -45,7 +45,7 @@ void master_loop(void) {
      */
  
     if (g_next_poll != g_last_poll) {
-        message_send(MSG_MASTER, g_next_poll, MSG_POLL);
+        message_send(MSG_MASTER, g_next_poll, MSG_DO_POLL);
         g_last_poll = g_next_poll;
     }
 }
@@ -87,7 +87,7 @@ static void master_handle_button_press(uint8_t r, uint8_t c) {
                 dbg_print("Clear All\r\n");
                 // Clear All
                 for (i=0; i<g_num_channels; i++) {
-                    message_send(MSG_MASTER, i+1, MSG_IDLE);
+                    message_send(MSG_MASTER, i+1, MSG_GOTO_IDLE);
                 }
                 break;
         }
@@ -99,7 +99,7 @@ static void master_handle_button_press(uint8_t r, uint8_t c) {
                 // Standby Selected
                 for (i=0; i<g_num_channels; i++) {
                     if (g_channel[i].selected) {
-                        message_send(MSG_MASTER, i+1, MSG_STANDBY);
+                        message_send(MSG_MASTER, i+1, MSG_GOTO_STANDBY);
                     }
                 }
                 break;
@@ -108,7 +108,7 @@ static void master_handle_button_press(uint8_t r, uint8_t c) {
                 // Go Selected
                 for (i=0; i<g_num_channels; i++) {
                     if (g_channel[i].selected) {
-                        message_send(MSG_MASTER, i+1, MSG_GO);
+                        message_send(MSG_MASTER, i+1, MSG_GOTO_GO);
                     }
                 }
                 break;
@@ -117,7 +117,7 @@ static void master_handle_button_press(uint8_t r, uint8_t c) {
                 // Clear Selected
                 for (i=0; i<g_num_channels; i++) {
                     if (g_channel[i].selected) {
-                        message_send(MSG_MASTER, i+1, MSG_IDLE);
+                        message_send(MSG_MASTER, i+1, MSG_GOTO_IDLE);
                     }
                 }
                 break;
@@ -133,19 +133,19 @@ static void master_handle_button_press(uint8_t r, uint8_t c) {
                 if ((g_channel[c].state == STATE_IDLE) ||
                     (g_channel[c].state == STATE_GO)) {
                     dbg_print("Idle -> Standby\r\n");
-                    message_send(MSG_MASTER, channel, MSG_STANDBY);
+                    message_send(MSG_MASTER, channel, MSG_GOTO_STANDBY);
                 } else {
                     dbg_print("Standby -> Idle\r\n");
-                    message_send(MSG_MASTER, channel, MSG_IDLE);
+                    message_send(MSG_MASTER, channel, MSG_GOTO_IDLE);
                 }
                 break;
             case ROW_GO:                // Go
                 if (g_channel[c].state == STATE_GO) {
                     dbg_print("Go -> Idle\r\n");
-                    message_send(MSG_MASTER, channel, MSG_IDLE);
+                    message_send(MSG_MASTER, channel, MSG_GOTO_IDLE);
                 } else {
                     dbg_print("Idle -> Go\r\n:");
-                    message_send(MSG_MASTER, channel, MSG_GO);
+                    message_send(MSG_MASTER, channel, MSG_GOTO_GO);
                 }
                 break;
             case ROW_SELECT:
@@ -187,25 +187,18 @@ static void master_handle_message(struct message *msg) {
     }
     
     switch(msg->msg_type) {
-        case MSG_READY:
-            message_send(MSG_MASTER, msg->from, MSG_READY_ACK);
-            if (g_channel[msg->from-1].state == STATE_STANDBY) {
-                master_set_state(msg->from, STATE_READY);
-            }
+        case MSG_GOTO_READY:
+            message_send(MSG_MASTER, msg->from, MSG_INSTATE_READY);
+            master_set_state(msg->from, STATE_READY);
             break;
-        case MSG_IDLE_ACK:
+        case MSG_INSTATE_IDLE:
             master_set_state(msg->from, STATE_IDLE);
             break;
-        case MSG_STANDBY_ACK:
+        case MSG_INSTATE_STANDBY:
             master_set_state(msg->from, STATE_STANDBY);
             break;
-        case MSG_GO_ACK:
+        case MSG_INSTATE_GO:
             master_set_state(msg->from, STATE_GO);
-            break;
-        case MSG_PRESENCE:
-            dbg_print("Channel ");
-            dbg_putch(msg->from + '0');
-            dbg_print(" present\r\n");
             break;
     }
 }

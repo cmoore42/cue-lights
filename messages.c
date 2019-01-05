@@ -121,7 +121,7 @@ uint8_t message_avail(void) {
  */
 void message_ob_process(void) {
     struct message *msg;
-    struct message presence;
+    struct message reply;
     
     while (ob_pi != ob_ci) {
         msg = &(outbound_q[ob_ci]);
@@ -130,10 +130,23 @@ void message_ob_process(void) {
     }
     
     if (g_mode == MODE_SLAVE) {
-        presence.from = g_my_address;
-        presence.to = MSG_MASTER;
-        presence.msg_type = MSG_PRESENCE;
-        xmit_msg(&presence);
+        reply.from = g_my_address;
+        reply.to = MSG_MASTER;
+        switch(g_slave_state) {
+            case STATE_IDLE:
+                reply.msg_type = MSG_INSTATE_IDLE;
+                break;
+            case STATE_STANDBY:
+                reply.msg_type = MSG_INSTATE_STANDBY;
+                break;
+            case STATE_READY:
+                reply.msg_type = MSG_INSTATE_READY;
+                break;
+            case STATE_GO:
+                reply.msg_type = MSG_INSTATE_GO;
+                break;
+        }
+        xmit_msg(&reply);
     }
 }
 
