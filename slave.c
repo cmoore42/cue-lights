@@ -68,5 +68,7 @@ static void slave_handle_message(struct message *msg) {
 }
 
 static void slave_handle_button_press() {
-    message_send(g_my_address, MSG_MASTER, MSG_GOTO_READY);
+    if (g_slave_state == STATE_STANDBY){
+        message_send(g_my_address, MSG_MASTER, MSG_GOTO_READY);
+    }
 }

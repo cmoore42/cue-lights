@@ -197,6 +197,9 @@ static void master_handle_message(struct message *msg) {
         case MSG_INSTATE_STANDBY:
             master_set_state(msg->from, STATE_STANDBY);
             break;
+        case MSG_INSTATE_READY:
+            master_set_state(msg->from, STATE_READY);
+            break;
         case MSG_INSTATE_GO:
             master_set_state(msg->from, STATE_GO);
             break;
